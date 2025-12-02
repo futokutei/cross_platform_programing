@@ -39,10 +39,6 @@ class log_in_page extends StatelessWidget{
               alignment: Alignment.center,
               child: Text(
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 27,
-                  fontFamily: 'Calibri',
-                ),
                 "Ввійдіть до застосунку",
               ),
             ) ,
@@ -63,13 +59,7 @@ class log_in_page extends StatelessWidget{
 
                         controller: _emailController,
                         decoration: const InputDecoration(
-                          hintStyle: TextStyle(color: Colors.white),
-                        hintText: 'Email: ',
-                        contentPadding: EdgeInsets.only(left: 16),
-
-
-                      border: InputBorder.none,
-
+                        hintText: 'Email: '
                     ),
                   ),
                  ),
@@ -88,11 +78,7 @@ class log_in_page extends StatelessWidget{
 
                       controller: _passController,
                       decoration: const InputDecoration(
-                        hintStyle: TextStyle(color: Colors.white),
-                      hintText: 'Пароль: ',
-                      contentPadding: EdgeInsets.only(left: 16),
-
-                      border: InputBorder.none,
+                      hintText: 'Пароль: '
                       )
                     )
                   )
@@ -103,9 +89,6 @@ class log_in_page extends StatelessWidget{
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xD11d2025),
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        height: 100,
         child:
         Column(
             children: <Widget>[
@@ -115,29 +98,13 @@ class log_in_page extends StatelessWidget{
                       onPressed: () {
                         _buttonPress(context);
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                      ),
                       child: const Text('Sing in')
                   )
               ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          side: BorderSide(color: Colors.blue, width: 2.0),
-                          minimumSize: Size(188, 37),
-                          backgroundColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                        ),
+                    OutlinedButton(
                         onPressed: () => {
                           Navigator.push(
                             context,
@@ -148,16 +115,7 @@ class log_in_page extends StatelessWidget{
                         },
                         child: const Text('Sing up')
                     ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          side: BorderSide(color: Colors.blue, width: 2.0),
-                          minimumSize: Size(188, 37),
-                          backgroundColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                        ),
+                    OutlinedButton(
                         onPressed: () => {
                           Navigator.push(
                             context,
@@ -183,9 +141,9 @@ void _buttonPress(BuildContext context){
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Помилка"),
-        content: const Text(
+        content: Text(
             'Будь ласка, заповніть усі поля.',
-          style: TextStyle(color: Colors.black)
+          style: Theme.of(context).textTheme.bodySmall,
         ),
         actions: [
           TextButton(
@@ -201,7 +159,7 @@ void _buttonPress(BuildContext context){
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Помилка"),
-        content: const Text('Будь ласка, введіть вашу електронну пошту.', style: TextStyle(color: Colors.black)),
+        content: Text('Будь ласка, введіть вашу електронну пошту.', style: Theme.of(context).textTheme.bodySmall,),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -216,7 +174,7 @@ void _buttonPress(BuildContext context){
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Помилка"),
-        content: const Text('Будь ласка, введіть ваш пароль.', style: TextStyle(color: Colors.black)),
+        content: Text('Будь ласка, введіть ваш пароль.', style: Theme.of(context).textTheme.bodySmall,),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -230,7 +188,7 @@ void _buttonPress(BuildContext context){
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const yappy(),
+          builder: (context) => yappy(),
         ),
       );
     };

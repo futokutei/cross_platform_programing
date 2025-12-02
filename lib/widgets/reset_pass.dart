@@ -34,10 +34,6 @@ class reset_pass extends StatelessWidget{
                 alignment: Alignment.center,
                 child: Text(
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 27,
-                    fontFamily: 'Calibri',
-                  ),
                   "Відновлення паролю",
                 ),
               ) ,
@@ -59,13 +55,7 @@ class reset_pass extends StatelessWidget{
 
                         controller: _emailController,
                         decoration: const InputDecoration(
-                          hintStyle: TextStyle(color: Colors.white),
                           hintText: 'Email: ',
-                          contentPadding: EdgeInsets.only(left: 16),
-
-
-                          border: InputBorder.none,
-
                         ),
                       ),
                     ),
@@ -75,9 +65,6 @@ class reset_pass extends StatelessWidget{
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Color(0xD11d2025),
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        height: 100,
         child:
         Column(
             children: <Widget>[
@@ -87,31 +74,15 @@ class reset_pass extends StatelessWidget{
                       onPressed: () {
                         _buttonPress(context);
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                      ),
                       child: const Text('Reset')
                   )
               ),
               SizedBox(
                   width: double.infinity,
-                  child:  ElevatedButton(
+                  child:  OutlinedButton(
                       onPressed: () => {
                         Navigator.pop(context)
                       },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        side: BorderSide(color: Colors.blue, width: 2.0),
-                        minimumSize: Size(188, 37),
-                        backgroundColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                      ),
                       child: const Text('Back')
                   )
               ),
@@ -128,9 +99,9 @@ void _buttonPress(BuildContext context){
       context: context,
       builder: (context) => AlertDialog(
         title: const Text("Помилка"),
-        content: const Text(
+        content: Text(
             'Будь ласка, введіть вашу електронну пошту.',
-            style: TextStyle(color: Colors.black)
+          style: Theme.of(context).textTheme.bodySmall,
         ),
         actions: [
           TextButton(
@@ -146,7 +117,7 @@ void _buttonPress(BuildContext context){
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const yappy(),
+          builder: (context) => yappy(),
         ),
       );
     };
