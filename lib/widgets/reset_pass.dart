@@ -3,8 +3,15 @@ import '/widgets/final_page.dart';
 
 final TextEditingController _emailController = TextEditingController();
 
-class reset_pass extends StatelessWidget{
+class reset_pass extends StatefulWidget{
   const reset_pass({super.key});
+  State<reset_pass> createState() => validateStatus();
+}
+
+class validateStatus extends State<reset_pass>{
+  final _formKey = GlobalKey<FormState>();
+
+
 
   @override
   Widget build(BuildContext context){
@@ -37,7 +44,9 @@ class reset_pass extends StatelessWidget{
                   "Відновлення паролю",
                 ),
               ) ,
-              Column(
+              Form(
+                key:_formKey,
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Container(
@@ -52,7 +61,8 @@ class reset_pass extends StatelessWidget{
                       height: 55.0,
                       alignment: Alignment.center,
                       child: TextFormField(
-
+                        validator: (String? value) { return value != null && RegExp('@').hasMatch(value) ? null : "Неправильний email";},
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: _emailController,
                         decoration: const InputDecoration(
                           hintText: 'Email: ',
@@ -60,6 +70,7 @@ class reset_pass extends StatelessWidget{
                       ),
                     ),
                   ]
+              ),
               ),
             ]
         ),
@@ -72,7 +83,13 @@ class reset_pass extends StatelessWidget{
                   width: double.infinity,
                   child:  ElevatedButton(
                       onPressed: () {
-                        _buttonPress(context);
+                        final isValid = _formKey.currentState?.validate();
+                        if(isValid == true){
+                          _buttonPress(context);
+                        }
+                        else if (_emailController.text.isEmpty){
+                          _buttonPress(context);
+                        }
                       },
                       child: const Text('Reset')
                   )

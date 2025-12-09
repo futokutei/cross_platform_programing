@@ -7,8 +7,13 @@ import '/widgets/final_page.dart';
 final TextEditingController _emailController = TextEditingController();
 final TextEditingController _passController = TextEditingController();
 
-class log_in_page extends StatelessWidget{
+class log_in_page extends StatefulWidget{
   const log_in_page({super.key});
+  State<log_in_page> createState() => validateStatus();
+}
+class validateStatus extends State<log_in_page>{
+  final _formKey = GlobalKey<FormState>();
+
 
 
   @override
@@ -42,7 +47,9 @@ class log_in_page extends StatelessWidget{
                 "Ввійдіть до застосунку",
               ),
             ) ,
-             Column(
+             Form(
+               key:_formKey,
+               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Container(
@@ -53,10 +60,11 @@ class log_in_page extends StatelessWidget{
                         width: 3.0,
                           )
                        ),
-                       height: 55.0,
+                       height: 59.0,
                        alignment: Alignment.center,
                       child: TextFormField(
-
+                        validator: (String? value) { return value != null && RegExp('@').hasMatch(value) ? null : "Неправильний email";},
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: _emailController,
                         decoration: const InputDecoration(
                         hintText: 'Email: '
@@ -72,10 +80,11 @@ class log_in_page extends StatelessWidget{
                         width: 3.0,
                        )
                     ),
-                  height: 55.0,
+                  height: 59.0,
                   alignment: Alignment.center,
                     child: TextFormField(
-
+                        validator: (String? value) { return value != null && value.length >= 7 ? null : "Неправильний пароль";},
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: _passController,
                       decoration: const InputDecoration(
                       hintText: 'Пароль: '
@@ -84,6 +93,7 @@ class log_in_page extends StatelessWidget{
                   )
                 ]
             ),
+             ),
             // до сіх
           ]
         ),
@@ -96,7 +106,13 @@ class log_in_page extends StatelessWidget{
                   width: double.infinity,
                   child:  ElevatedButton(
                       onPressed: () {
-                        _buttonPress(context);
+                        final isValid = _formKey.currentState?.validate();
+                        if(isValid == true){
+                          _buttonPress(context);
+                        }
+                        else if ((_emailController.text.isEmpty && _passController.text.isEmpty)|| (_passController.text.isEmpty)||(_emailController.text.isEmpty)){
+                          _buttonPress(context);
+                        }
                       },
                       child: const Text('Sing in')
                   )
@@ -134,6 +150,7 @@ class log_in_page extends StatelessWidget{
     );
   }
 }
+
 
 void _buttonPress(BuildContext context){
   if (_emailController.text.isEmpty && _passController.text.isEmpty){

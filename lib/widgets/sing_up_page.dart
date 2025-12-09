@@ -5,8 +5,14 @@ final TextEditingController _emailController = TextEditingController();
 final TextEditingController _passController = TextEditingController();
 final TextEditingController _nameController = TextEditingController();
 
-class sing_up_page extends StatelessWidget{
+class sing_up_page extends StatefulWidget{
   const sing_up_page({super.key});
+  State<sing_up_page> createState() => validateStatus();
+}
+class validateStatus extends State<sing_up_page>{
+  final _formKey = GlobalKey<FormState>();
+
+
 
   @override
   Widget build(BuildContext context){
@@ -39,7 +45,9 @@ class sing_up_page extends StatelessWidget{
                   "Реєстрація",
                 ),
               ) ,
-              Column(
+              Form(
+                key:_formKey,
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Container(
@@ -53,7 +61,6 @@ class sing_up_page extends StatelessWidget{
                       height: 55.0,
                       alignment: Alignment.center,
                       child: TextFormField(
-
                         controller: _nameController,
                         decoration: const InputDecoration(
                           hintText: "Ім'я: ",
@@ -72,7 +79,8 @@ class sing_up_page extends StatelessWidget{
                       height: 55.0,
                       alignment: Alignment.center,
                       child: TextFormField(
-
+                        validator: (String? value) { return value != null && RegExp('@').hasMatch(value) ? null : "Неправильний email";},
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: _emailController,
                         decoration: const InputDecoration(
                           hintText: 'Email: ',
@@ -91,6 +99,8 @@ class sing_up_page extends StatelessWidget{
                         height: 55.0,
                         alignment: Alignment.center,
                         child: TextFormField(
+                            validator: (String? value) { return value != null && value.length >= 7 ? null : "Неправильний пароль";},
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             controller: _passController,
                             decoration: const InputDecoration(
                               hintText: 'Пароль: ',
@@ -98,6 +108,7 @@ class sing_up_page extends StatelessWidget{
                         )
                     )
                   ]
+              ),
               ),
             ]
         ),
@@ -110,7 +121,13 @@ class sing_up_page extends StatelessWidget{
                   width: double.infinity,
                   child:  ElevatedButton(
                       onPressed: () {
-                        _buttonPress(context);
+                        final isValid = _formKey.currentState?.validate();
+                        if(isValid == true){
+                          _buttonPress(context);
+                        }
+                        else if ((_emailController.text.isEmpty && _passController.text.isEmpty && _nameController.text.isEmpty)|| (_passController.text.isEmpty)||(_emailController.text.isEmpty)|| (_nameController.text.isEmpty)){
+                          _buttonPress(context);
+                        }
                       },
                       child: const Text('Sing up')
                   )
@@ -130,7 +147,6 @@ class sing_up_page extends StatelessWidget{
     );
   }
 }
-
 void _buttonPress(BuildContext context){
   if (_emailController.text.isEmpty && _passController.text.isEmpty && _nameController.text.isEmpty){
     showDialog(
