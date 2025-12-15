@@ -239,7 +239,7 @@ void _buttonPress(BuildContext context){
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const yappy(),
+          builder: (context) => yappy(),
         ),
       );
     };

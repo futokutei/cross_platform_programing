@@ -2,17 +2,29 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
+class yappy extends StatefulWidget {
+  @override
+  _yappy createState() => _yappy();
+}
 
+class _yappy extends State<yappy> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
-class yappy extends StatelessWidget{
-  const yappy({super.key});
+  Future<void> _playSound() async {
+    await _audioPlayer.play(AssetSource('sounds/yippee_2.flac'));
+  }
 
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context){
     return Scaffold(
       body: Center(
         child: GestureDetector(
-          onTap: _audioPlay,
+          onTap: _playSound,
             child: Container(
                 width: 200,
                 height: 200,
@@ -55,9 +67,4 @@ class yappy extends StatelessWidget{
       ),
     );
   }
-}
-final player = AudioPlayer();
-Future<void> _audioPlay() async {
-  await player.play(AssetSource("sounds/yippee_2.mp3"));
-
 }
